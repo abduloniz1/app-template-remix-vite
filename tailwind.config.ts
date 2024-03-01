@@ -1,10 +1,11 @@
-const svgToDataUri = require('mini-svg-data-uri')
+import type { Config } from 'tailwindcss'
+import svgToDataUri from 'mini-svg-data-uri'
 const {
   default: flattenColorPalette,
 } = require('tailwindcss/lib/util/flattenColorPalette')
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+  mode: process.env.NODE_ENV ? 'jit' : undefined,
   darkMode: ['class'],
   content: [
     './components/**/*.{ts,tsx}',
@@ -29,10 +30,8 @@ module.exports = {
         link: 'var(--link)',
 
         // ShadCN colors
-        // primary: 'var(--base)',
-        // 'primary-foreground': 'var(--foreground)',
-        // destructive: 'var(--error-600)',
-        // 'primary-foreground': 'var(--foreground)',
+        'primary-foreground': 'var(--foreground)',
+        destructive: 'var(--error-600)',
         accent: 'rgba(255,255,255,0.05)',
         'accent-foreground': 'var(--foreground)',
         input: 'var(--primary-700)',
@@ -119,12 +118,12 @@ module.exports = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
       },
       animation: {
@@ -141,6 +140,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animate'),
+    require('@tailwindcss/container-queries'),
     function ({ matchUtilities, theme }: { matchUtilities: any; theme: any }) {
       matchUtilities(
         {
@@ -169,4 +169,4 @@ module.exports = {
       )
     },
   ],
-}
+} satisfies Config

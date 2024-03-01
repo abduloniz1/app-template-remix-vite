@@ -39,9 +39,29 @@ export async function authenticate(
 ): Promise<User> {
   const session = await DIDSession.fromSession(didSession)
   if (!session.hasSession || session.isExpired) {
-    throw new Error('Invalid DID Session')
+    throw new Error('Error: Invalid DID Session')
+  }
+  // and compare it with the wallet passed
+  const derivedWallet = session.id.split(':')[4]
+  if (derivedWallet !== wallet) {
+    throw new Error('Error: Wallet does not match the DID Session')
   }
 
+  // TODO: Check if the user is an admin.
+  const adminAddresses = [
+    '0x555E8A0E3956D685552dd92b404377B1FA69126E',
+    '0x25709998B542f1Be27D19Fa0B3A9A67302bc1b94',
+    '0x025f38acB8D005e2aF8CD4A5249ccF5cEf99774b',
+    '0xf8621e8B829a010f333729F03B69700756F436Ba',
+    '0x2593427Ec753F2d93560c76BE61e91ad3B4D0c68', //joji dev 1
+    '0x6b466d9492Dc28FC4a83454d335E53e1a7Dd910D',
+  ]
+
+  // check if the wallet is an admin
+  const isAdmin = adminAddresses.includes(wallet)
+  if (!isAdmin) {
+    throw new Error('Error: User is not an admin')
+  }
   return {
     didSession,
     wallet,

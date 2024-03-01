@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils/misc'
 import { ConnectButton as RainbowkitConnectButton } from '@rainbow-me/rainbowkit'
 import { Loader2Icon } from 'lucide-react'
 import type { User } from 'types/user'
-import { optimismSepolia } from 'viem/chains'
+import { sepolia } from 'viem/chains'
 import { useSwitchNetwork } from 'wagmi'
 
 interface ConnectButtonProps {
@@ -21,7 +21,7 @@ export function ConnectButton({
 
   const handleSwitch = () => {
     if (switchNetwork) {
-      switchNetwork(optimismSepolia.id)
+      switchNetwork(sepolia.id)
     }
   }
 
@@ -55,7 +55,7 @@ export function ConnectButton({
             {!connected ? (
               <Button
                 size={size}
-                variant="connect"
+                variant="primary"
                 className={cn(className)}
                 onClick={openConnectModal}
               >
@@ -65,15 +65,15 @@ export function ConnectButton({
               <Button
                 disabled
                 size={size}
-                variant="connect"
+                variant="primary"
                 className={cn(className)}
               >
                 <Loader2Icon className="mr-1 h-5 w-5 animate-spin" /> Signing...
               </Button>
-            ) : chain?.id !== optimismSepolia.id ? (
+            ) : chain?.id !== sepolia.id ? (
               <Button
                 size={size}
-                variant="connect"
+                variant="primary"
                 className={cn(className)}
                 onClick={handleSwitch}
               >

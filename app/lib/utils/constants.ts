@@ -1,15 +1,28 @@
-import { optimismSepolia } from 'viem/chains'
+import { sepolia } from 'viem/chains'
 
 export const DEFAULT_DOMAIN = 'localhost'
 export const DEFAULT_URI = 'http://localhost:3000'
-export const DEFAULT_CHAIN_ID = optimismSepolia.id.toString()
+export const DEFAULT_CHAIN_ID = sepolia.id
 
 export const DEFAULT_STRATEGY_OPTIONS = {
   domain: DEFAULT_DOMAIN,
 }
 
 export const MULTIVAULT_CONTRACT_ADDRESS =
-  '0x102AAAD6b67B0cE1D00e08bF0cBF27eD53fe3587'
+  '0x5a4E28Aa014237a9997c6E8F597E5f0076083eF3'
 
-export const DOCUMENTATION_URL = 'https://docs.intuition.systems/'
-export const EXAMPLES_URL = 'https://docs.intuition.systems/example-apps/'
+export const NFT_CONTRACT_ADDRESS = '0x0953560ECFDDF1Fcd35BF044743c875aE053DB99'
+export const WETH_CONTRACT_ADDRESS =
+  '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
+
+export const CURRENT_LISTING_FCFS = 'f8f7d4c3-f007-4333-8a55-6a84f8adfd19'
+
+export const CURRENT_LISTING_FREE_ALLOWLIST =
+  'c310f91e-8015-45b1-b45f-33540050a062'
+
+export const CURRENT_LISTING_FREE_ALLOWLIST_NO_LIMIT =
+  'c310f91e-8015-45b1-b45f-33540050a062'
+
+export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
+export const ERC_721_TRANSFER_EVENT_SIGNATURE =
+  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'

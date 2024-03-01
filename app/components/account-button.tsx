@@ -11,9 +11,10 @@ import { cn } from '@/lib/utils/misc'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { LogOut } from 'lucide-react'
 import type { User } from 'types/user'
-import { optimismSepolia } from 'viem/chains'
+import { sepolia } from 'viem/chains'
 import { useSwitchNetwork } from 'wagmi'
 import { MetaMaskAvatar } from 'react-metamask-avatar'
+import { NavLink } from '@remix-run/react'
 
 interface AccountButtonProps {
   user?: User | null
@@ -32,7 +33,7 @@ export function AccountButton({
 
   const handleSwitch = () => {
     if (switchNetwork) {
-      switchNetwork(optimismSepolia.id)
+      switchNetwork(sepolia.id)
     }
   }
 
@@ -52,7 +53,7 @@ export function AccountButton({
           chain &&
           (!authenticationStatus || authenticationStatus === 'authenticated')
 
-        if (connected && chain?.id !== optimismSepolia.id) {
+        if (connected && chain?.id !== sepolia.id) {
           return (
             <Button
               size={size}
@@ -75,7 +76,7 @@ export function AccountButton({
               },
             })}
           >
-            {connected && !!user ? (
+            {connected && !!user && (
               <div className="flex gap-2 rounded-full p-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -89,7 +90,7 @@ export function AccountButton({
                     >
                       <div className="flex items-center gap-1">
                         <MetaMaskAvatar
-                          address={account?.address || ''}
+                          address="0xb01F14d1C9000D453241221EB54648F1C378c970"
                           size={40}
                           className="rounded-full"
                         />
@@ -102,9 +103,9 @@ export function AccountButton({
                         <div className="text-sm font-normal text-primary-500">
                           Signed in as:
                         </div>
-                        <div className="font-semibold">
+                        <NavLink to="/profile" className="hover:underline">
                           {account?.displayName}
-                        </div>
+                        </NavLink>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
@@ -124,7 +125,7 @@ export function AccountButton({
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-            ) : null}
+            )}
           </div>
         )
       }}

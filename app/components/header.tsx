@@ -1,9 +1,11 @@
-import { Link, useFetcher } from '@remix-run/react'
+import { Await, Link, useFetcher } from '@remix-run/react'
 import IntuitionLogotype from '@/assets/intuition-logotype'
-import { useDisconnect } from 'wagmi'
-import templateBadge from '../../src/images/template-badge.png'
+import { useAccount, useDisconnect } from 'wagmi'
+import templateBadge from '@images/NFT-badge.png'
 import { AccountButton } from './account-button'
 import { User } from 'types/user'
+import { ConnectButton } from './connect-button'
+import { ClientOnly } from 'remix-utils/client-only'
 
 export interface HeaderProps {
   user: User | null
@@ -12,6 +14,7 @@ export interface HeaderProps {
 export default function Header({ user }: HeaderProps) {
   const fetcher = useFetcher()
   const { disconnect } = useDisconnect()
+  const { isConnected } = useAccount()
 
   async function handleSignout() {
     disconnect()
@@ -31,13 +34,21 @@ export default function Header({ user }: HeaderProps) {
           </div>
         </Link>
       </div>
-      <div className="h-12">
-        {user?.wallet ? (
-          <AccountButton handleSignOut={handleSignout} user={user} size="lg" />
-        ) : (
-          <div />
+      <ClientOnly fallback={<div className="h-12" />}>
+        {() => (
+          <div className="h-12">
+            {user?.wallet && isConnected ? (
+              <AccountButton
+                handleSignOut={handleSignout}
+                user={user}
+                size="lg"
+              />
+            ) : (
+              <ConnectButton size="lg" user={user} />
+            )}
+          </div>
         )}
-      </div>
+      </ClientOnly>
     </div>
   )
 }

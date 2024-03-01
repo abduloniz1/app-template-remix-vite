@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFetcher, useLoaderData, useSubmit } from '@remix-run/react'
 import { ActionFunctionArgs, LoaderFunction, json } from '@remix-run/node'
 import { makeDomainFunction } from 'domain-functions'
-import { optimismSepolia } from 'viem/chains'
+import { sepolia } from 'viem/chains'
 import {
   useAccount,
   useDisconnect,
@@ -17,7 +17,7 @@ import { Card } from '@/components/ui/card'
 import { isAuthedUser, login } from '@/lib/services/auth.server'
 import { formAction } from '@/lib/services/form.server'
 import { newDIDSessionFromWalletClient } from '@/lib/utils/siwe'
-import templateAppIcon from '../../src/images/app-template-logo.png'
+import templateAppIcon from '@images/app-template-logo.png'
 import GetStarted from '@/components/get-started'
 
 const schema = z.object({
@@ -101,8 +101,8 @@ export default function LoginIndexRoute() {
 
   // Detect Wrong Network
   useEffect(() => {
-    if (chain !== optimismSepolia && switchNetwork) {
-      switchNetwork(optimismSepolia.id)
+    if (chain !== sepolia && switchNetwork) {
+      switchNetwork(sepolia.id)
     }
   }, [chain, switchNetwork])
 

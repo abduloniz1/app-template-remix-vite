@@ -1,5 +1,5 @@
 import { type WriteContractMode } from '@wagmi/core'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import type { Abi, TransactionReceipt } from 'viem'
 import {
   useContractWrite,
@@ -26,6 +26,27 @@ export function usePreparedContractWriteAndWait<
   const { config } = usePrepareContractWrite<TAbi, TFunctionName, TChainId>(
     prepareContractWriteConfig,
   )
+
+  // Add 20% to the estimated gas just to be safe
+  const configWithPaddedGasLimit = useMemo(() => {
+    if (!config || !config.request) {
+      return config
+    } else {
+      return {
+        ...config,
+        request: {
+          ...config.request,
+          gasLimit: addGasMargin(
+            config.request.gas
+              ? config.request.gasPrice
+                ? config.request.gas
+                : 0n
+              : 0n,
+          ),
+        },
+      }
+    }
+  }, [config])
 
   return useContractWriteAndWait<TAbi, TFunctionName, 'prepared'>(config)
 }
@@ -79,4 +100,7 @@ export function useContractWriteAndWait<
     isSuccess,
     onReceipt: onReceipt.current,
   }
+}
+function addGasMargin(arg0: bigint): any {
+  throw new Error('Function not implemented.')
 }
