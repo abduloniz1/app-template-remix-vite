@@ -51,7 +51,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const listing = await getListingById(CURRENT_LISTING_FCFS)
   const listings = await getCollectionListings(
-    process.env.PHOSPHOR_COLLECTION_ID,
+    process.env.PHOSPHOR_COLLECTION_ID!,
   )
 
   const activeOrgListings = await getOrganizationListings(
